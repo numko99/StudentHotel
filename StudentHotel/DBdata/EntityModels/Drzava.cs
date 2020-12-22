@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DBdata.EntityModels
 {
-    class Drzava
+    public class Drzava
     {
         public int ID { get; set; }
         public string Naziv { get; set; }
