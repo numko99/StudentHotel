@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DBdata.EntityModels
 {
-    public class Student
+    class Konkurs
     {
         public int ID { get; set; }
         public string Ime { get; set; }
@@ -21,6 +21,16 @@ namespace DBdata.EntityModels
         public string Mobitel { get; set; }
         public string Email { get; set; }
 
+
+
+        public string Adresa { get; set; }
+        public Grad MjestoStanovanja { get; set; }
+        public int MjestoStanovanjaID { get; set; }
+        public Drzava Drzava { get; set; }
+        public int DrzavaID { get; set; }
+
+
+
         public Fakultet Fakultet { get; set; }
         public int FakultetID { get; set; }
         public TipKandidata TipKandidata { get; set; }
@@ -31,10 +41,7 @@ namespace DBdata.EntityModels
         public GodinaStudija GodinaStudija { get; set; }
         public int GodinaStudijaID { get; set; }
 
-        public Lokacija Lokacija { get; set; }
-        public int LokacijaID { get; set; }
-
-
-        public bool Uselio { get; set; }
+        public Student Student { get; set; }
+        public int StudentID { get; set; }
     }
 }
