@@ -2,7 +2,7 @@
 
 namespace DBdata.Migrations
 {
-    public partial class StudentHotel2 : Migration
+    public partial class migracija3 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -99,6 +99,19 @@ namespace DBdata.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Pols",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Pols", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Sobas",
                 columns: table => new
                 {
@@ -192,7 +205,7 @@ namespace DBdata.Migrations
                         column: x => x.MjestoStanovanjaID,
                         principalTable: "Grads",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -234,7 +247,6 @@ namespace DBdata.Migrations
                     Pol = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     JMBG = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LicnaKarta = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Mjesto_izdavanja_LK = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DatumRodjenja = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Mobitel = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -370,7 +382,7 @@ namespace DBdata.Migrations
                     ImeOca = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MjestoRodjenjaID = table.Column<int>(type: "int", nullable: false),
                     ZanimanjeRoditelja = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Pol = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PolID = table.Column<int>(type: "int", nullable: false),
                     JMBG = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LicnaKarta = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Mjesto_izdavanja_LK = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -379,13 +391,13 @@ namespace DBdata.Migrations
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Adresa = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MjestoStanovanjaID = table.Column<int>(type: "int", nullable: false),
-                    DrzavaID = table.Column<int>(type: "int", nullable: false),
+                    KantonID = table.Column<int>(type: "int", nullable: false),
                     FakultetID = table.Column<int>(type: "int", nullable: false),
                     TipKandidataID = table.Column<int>(type: "int", nullable: false),
                     BrojIndeksa = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CiklusStudijaID = table.Column<int>(type: "int", nullable: false),
                     GodinaStudijaID = table.Column<int>(type: "int", nullable: false),
-                    StudentID = table.Column<int>(type: "int", nullable: false)
+                    StudentID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -394,12 +406,6 @@ namespace DBdata.Migrations
                         name: "FK_Konkurs_CiklusStudijas_CiklusStudijaID",
                         column: x => x.CiklusStudijaID,
                         principalTable: "CiklusStudijas",
-                        principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Konkurs_Drzavas_DrzavaID",
-                        column: x => x.DrzavaID,
-                        principalTable: "Drzavas",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -419,7 +425,7 @@ namespace DBdata.Migrations
                         column: x => x.MjestoRodjenjaID,
                         principalTable: "Grads",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Konkurs_Grads_MjestoStanovanjaID",
                         column: x => x.MjestoStanovanjaID,
@@ -427,11 +433,23 @@ namespace DBdata.Migrations
                         principalColumn: "ID",
                         onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
+                        name: "FK_Konkurs_Kantons_KantonID",
+                        column: x => x.KantonID,
+                        principalTable: "Kantons",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Konkurs_Pols_PolID",
+                        column: x => x.PolID,
+                        principalTable: "Pols",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
                         name: "FK_Konkurs_Students_StudentID",
                         column: x => x.StudentID,
                         principalTable: "Students",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Konkurs_tipKandidatas_TipKandidataID",
                         column: x => x.TipKandidataID,
@@ -459,13 +477,13 @@ namespace DBdata.Migrations
                         column: x => x.KarticaID,
                         principalTable: "Karticas",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Ugovors_Osobljes_DodanUgovorOsobljeID",
                         column: x => x.DodanUgovorOsobljeID,
                         principalTable: "Osobljes",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Ugovors_Sobas_SobaID",
                         column: x => x.SobaID,
@@ -533,7 +551,7 @@ namespace DBdata.Migrations
                         column: x => x.UgovorID,
                         principalTable: "Ugovors",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -613,11 +631,6 @@ namespace DBdata.Migrations
                 column: "CiklusStudijaID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Konkurs_DrzavaID",
-                table: "Konkurs",
-                column: "DrzavaID");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Konkurs_FakultetID",
                 table: "Konkurs",
                 column: "FakultetID");
@@ -628,6 +641,11 @@ namespace DBdata.Migrations
                 column: "GodinaStudijaID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Konkurs_KantonID",
+                table: "Konkurs",
+                column: "KantonID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Konkurs_MjestoRodjenjaID",
                 table: "Konkurs",
                 column: "MjestoRodjenjaID");
@@ -636,6 +654,11 @@ namespace DBdata.Migrations
                 name: "IX_Konkurs_MjestoStanovanjaID",
                 table: "Konkurs",
                 column: "MjestoStanovanjaID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Konkurs_PolID",
+                table: "Konkurs",
+                column: "PolID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Konkurs_StudentID",
@@ -764,6 +787,9 @@ namespace DBdata.Migrations
                 name: "DnevnaPonudas");
 
             migrationBuilder.DropTable(
+                name: "Drzavas");
+
+            migrationBuilder.DropTable(
                 name: "Konkurs");
 
             migrationBuilder.DropTable(
@@ -785,7 +811,7 @@ namespace DBdata.Migrations
                 name: "Zahtjevs");
 
             migrationBuilder.DropTable(
-                name: "Drzavas");
+                name: "Pols");
 
             migrationBuilder.DropTable(
                 name: "NacinUplates");

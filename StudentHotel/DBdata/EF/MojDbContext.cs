@@ -6,7 +6,7 @@ using System.Text;
 
 namespace DBdata.EF
 {
-    class MojDbContext:DbContext
+    public class MojDbContext:DbContext
     {
         public DbSet<CiklusStudija> CiklusStudijas { get; set; }
         public DbSet<DnevnaPonuda> DnevnaPonudas { get; set; }
@@ -15,6 +15,7 @@ namespace DBdata.EF
         public DbSet<GodinaStudija> GodinaStudijas { get; set; }
         public DbSet<Grad> Grads { get; set; }
         public DbSet<Kanton> Kantons { get; set; }
+        public DbSet<Pol> Pols { get; set; }
         public DbSet<Kartica> Karticas { get; set; }
         public DbSet<Konkurs> Konkurs { get; set; }
         public DbSet<Kuharica> Kuharicas { get; set; }
@@ -41,12 +42,9 @@ namespace DBdata.EF
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@" Server=.;
-                                        Database=StudentHotel2;   
+                                        Database=StudentHotel3;   
                                         Trusted_Connection=true;
                                         MultipleActiveResultSets=true; ");
-
-
-
         }
     }
 }
