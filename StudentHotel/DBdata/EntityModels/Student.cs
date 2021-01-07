@@ -13,7 +13,8 @@ namespace DBdata.EntityModels
         public Grad MjestoRodjenja { get; set; }
         public int MjestoRodjenjaID { get; set; }
         public string ZanimanjeRoditelja { get; set; }
-        public string Pol { get; set; }
+        public Pol Pol { get; set; }
+        public int  PolID { get; set; }
         public string JMBG { get; set; }
         public string LicnaKarta { get; set; }
         public string DatumRodjenja { get; set; }

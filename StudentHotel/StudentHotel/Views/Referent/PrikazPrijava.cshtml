@@ -1,0 +1,34 @@
+﻿@using StudentHotel.Models.Referent
+@{ 
+    @model PrikazPrijavaVM
+}
+<table class="table">
+    <tr>
+        <th>Ime i Prezime</th>
+        <th>Datum Rodjenja</th>
+        <th>Mjesto Stanovanja</th>
+        <th></th>
+    </tr>
+    @foreach (var item in Model.Students)
+    {
+<tr>
+    <td>@item.Ime @item.Prezime</td>
+    <td>@item.DatumRodjenja</td>
+    <td>@item.OpstinaPrebivalista</td>
+    @{
+        if (item.StudentID > 0)
+        {
+            <td style="color:red">Student Primljen</td>
+            <td><button class="btn btn-light" onclick="window.location='/Referent/DetaljiPrikazPrijava?KonkursID='+@item.ID">Uredi</button></td>
+
+        }
+        else
+        {
+            <td><button class="btn btn-primary" onclick="window.location='/Referent/DetaljiPrikazPrijava?KonkursID='+@item.ID">Pregled</button></td>
+
+        }
+    }
+</tr>
+    }
+
+</table>

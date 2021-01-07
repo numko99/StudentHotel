@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DBdata.Migrations
 {
     [DbContext(typeof(MojDbContext))]
-    [Migration("20210103151625_migracija3")]
-    partial class migracija3
+    [Migration("20210107160139_StudentHotel4")]
+    partial class StudentHotel4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -265,6 +265,9 @@ namespace DBdata.Migrations
                     b.Property<string>("Adresa")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("KantonID")
+                        .HasColumnType("int");
+
                     b.Property<int>("MjestoStanovanjaID")
                         .HasColumnType("int");
 
@@ -272,6 +275,8 @@ namespace DBdata.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("ID");
+
+                    b.HasIndex("KantonID");
 
                     b.HasIndex("MjestoStanovanjaID");
 
@@ -494,8 +499,8 @@ namespace DBdata.Migrations
                     b.Property<string>("Mobitel")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Pol")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("PolID")
+                        .HasColumnType("int");
 
                     b.Property<string>("Prezime")
                         .HasColumnType("nvarchar(max)");
@@ -520,6 +525,8 @@ namespace DBdata.Migrations
                     b.HasIndex("LokacijaID");
 
                     b.HasIndex("MjestoRodjenjaID");
+
+                    b.HasIndex("PolID");
 
                     b.HasIndex("TipKandidataID");
 
@@ -811,11 +818,19 @@ namespace DBdata.Migrations
 
             modelBuilder.Entity("DBdata.EntityModels.Lokacija", b =>
                 {
+                    b.HasOne("DBdata.EntityModels.Kanton", "Kanton")
+                        .WithMany()
+                        .HasForeignKey("KantonID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DBdata.EntityModels.Grad", "MjestoStanovanja")
                         .WithMany()
                         .HasForeignKey("MjestoStanovanjaID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Kanton");
 
                     b.Navigation("MjestoStanovanja");
                 });
@@ -896,6 +911,12 @@ namespace DBdata.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DBdata.EntityModels.Pol", "Pol")
+                        .WithMany()
+                        .HasForeignKey("PolID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("DBdata.EntityModels.TipKandidata", "TipKandidata")
                         .WithMany()
                         .HasForeignKey("TipKandidataID")
@@ -911,6 +932,8 @@ namespace DBdata.Migrations
                     b.Navigation("Lokacija");
 
                     b.Navigation("MjestoRodjenja");
+
+                    b.Navigation("Pol");
 
                     b.Navigation("TipKandidata");
                 });

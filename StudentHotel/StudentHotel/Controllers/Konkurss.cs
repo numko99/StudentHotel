@@ -6,7 +6,7 @@ using DBdata.EF;
 using DBdata.EntityModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using StudentHotel.Models.Konkurs;
+using StudentHotel.Models.Konkurss;
 
 namespace StudentHotel.Controllers
 {

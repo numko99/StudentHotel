@@ -11,5 +11,7 @@ namespace DBdata.EntityModels
         public string PostanskiBroj { get; set; }
         public Grad MjestoStanovanja { get; set; }
         public int MjestoStanovanjaID { get; set; }
+        public Kanton Kanton { get; set; }
+        public int KantonID { get; set; }
     }
 }

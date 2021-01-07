@@ -2,7 +2,7 @@
 
 namespace DBdata.Migrations
 {
-    public partial class migracija3 : Migration
+    public partial class StudentHotel4 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -195,7 +195,8 @@ namespace DBdata.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Adresa = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PostanskiBroj = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MjestoStanovanjaID = table.Column<int>(type: "int", nullable: false)
+                    MjestoStanovanjaID = table.Column<int>(type: "int", nullable: false),
+                    KantonID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -206,6 +207,12 @@ namespace DBdata.Migrations
                         principalTable: "Grads",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Lokacijas_Kantons_KantonID",
+                        column: x => x.KantonID,
+                        principalTable: "Kantons",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -244,7 +251,7 @@ namespace DBdata.Migrations
                     ImeOca = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MjestoRodjenjaID = table.Column<int>(type: "int", nullable: false),
                     ZanimanjeRoditelja = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Pol = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PolID = table.Column<int>(type: "int", nullable: false),
                     JMBG = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LicnaKarta = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     DatumRodjenja = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -291,6 +298,12 @@ namespace DBdata.Migrations
                         principalTable: "Lokacijas",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Students_Pols_PolID",
+                        column: x => x.PolID,
+                        principalTable: "Pols",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Students_tipKandidatas_TipKandidataID",
                         column: x => x.TipKandidataID,
@@ -425,7 +438,7 @@ namespace DBdata.Migrations
                         column: x => x.MjestoRodjenjaID,
                         principalTable: "Grads",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Konkurs_Grads_MjestoStanovanjaID",
                         column: x => x.MjestoStanovanjaID,
@@ -437,7 +450,7 @@ namespace DBdata.Migrations
                         column: x => x.KantonID,
                         principalTable: "Kantons",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Konkurs_Pols_PolID",
                         column: x => x.PolID,
@@ -671,6 +684,11 @@ namespace DBdata.Migrations
                 column: "TipKandidataID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Lokacijas_KantonID",
+                table: "Lokacijas",
+                column: "KantonID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Lokacijas_MjestoStanovanjaID",
                 table: "Lokacijas",
                 column: "MjestoStanovanjaID");
@@ -719,6 +737,11 @@ namespace DBdata.Migrations
                 name: "IX_Students_MjestoRodjenjaID",
                 table: "Students",
                 column: "MjestoRodjenjaID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Students_PolID",
+                table: "Students",
+                column: "PolID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_TipKandidataID",
@@ -811,9 +834,6 @@ namespace DBdata.Migrations
                 name: "Zahtjevs");
 
             migrationBuilder.DropTable(
-                name: "Pols");
-
-            migrationBuilder.DropTable(
                 name: "NacinUplates");
 
             migrationBuilder.DropTable(
@@ -848,6 +868,9 @@ namespace DBdata.Migrations
 
             migrationBuilder.DropTable(
                 name: "Lokacijas");
+
+            migrationBuilder.DropTable(
+                name: "Pols");
 
             migrationBuilder.DropTable(
                 name: "tipKandidatas");
