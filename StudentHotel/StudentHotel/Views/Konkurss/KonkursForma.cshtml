@@ -97,7 +97,7 @@
         <div>
             <div class="form-group">
                 <label>Kanton</label>
-                <select asp-for="KantonID" asp-items="@Model.Kanton" class="form-control form-control-sm"></select>
+                <select asp-for="KantonID" asp-items="@Model.Kanton" class="form-control form-control-sm" id="DropdownID" onchange="admir()"></select>
             </div>
         </div>
 
@@ -133,3 +133,13 @@
     </fieldset>
     <input type="submit" class="btn btn-danger" value="Submit" />
 </form>
+
+@*<button onclick=admir()>ssss</button>
+<script>
+    var admir=() => {
+
+        console.log(document.getElementById("DropdownID").value);
+        var kanton = document.getElementById("DropdownID").value;
+        var opstine=
+    }
+</script>*@

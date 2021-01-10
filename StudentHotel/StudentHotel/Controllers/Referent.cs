@@ -31,7 +31,10 @@ namespace StudentHotel.Controllers
             model.Students = prijave;
             return View(model);
         }
+        public void Dodjela()
+        {
 
+        }
         public IActionResult DetaljiPrikazPrijava(int KonkursID)
         {
             MojDbContext dBcONTEXT = new MojDbContext();
