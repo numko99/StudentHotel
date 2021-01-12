@@ -33,6 +33,9 @@ namespace DBdata.EF
         public DbSet<Uplata> Uplatas { get; set; }
         public DbSet<Upozorenje> Upozorenjes { get; set; }
         public DbSet<VrstaStanjaZahtjeva> VrstaStanjaZahtjevas { get; set; }
+        public DbSet<VrstaStanjaKonkursa> VrstaStanjaKonkursas { get; set; }
+        public DbSet<RezultatKonkursa> RezultatKonkursas { get; set; }
+        public DbSet<VrstaRazlogaOdbijanja> vrstaRazlogaOdbijanjas { get; set; }
         public DbSet<VrstaZahtjeva> VrstaZahtjevas { get; set; }
         public DbSet<Zahtjev> Zahtjevs { get; set; }
 
@@ -42,7 +45,7 @@ namespace DBdata.EF
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer(@" Server=.;
-                                        Database=StudentHotel4;   
+                                        Database=StudentHotel7;   
                                         Trusted_Connection=true;
                                         MultipleActiveResultSets=true; ");
         }

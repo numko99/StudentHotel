@@ -44,5 +44,7 @@ namespace DBdata.EntityModels
 
         public Student Student { get; set; }
         public int? StudentID { get; set; }
+        public  RezultatKonkursa RezultatKonkursa { get; set; }
+        public int? RezultatKonkursaID { get; set; }
     }
 }

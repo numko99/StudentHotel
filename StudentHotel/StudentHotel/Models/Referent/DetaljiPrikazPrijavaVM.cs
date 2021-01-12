@@ -1,4 +1,5 @@
 ﻿using DBdata.EntityModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,5 +44,12 @@ namespace StudentHotel.Models.Referent
         public int CiklusStudijaID { get; set; }
         public  string GodinaStudija { get; set; }
         public int GodinaStudijaID { get; set; }
+
+        public List<SelectListItem> VrsteStanjaKonkursa { get; set; }
+        public int? VrsteStanjaKonkursaID { get; set; }
+        public List<SelectListItem> VrstaRazlogaOdbijanja { get; set; }
+        public int? VrstaRazlogaOdbijanjaID { get; set; }
+        public int Bodovi { get; set; }
+       
     }
 }

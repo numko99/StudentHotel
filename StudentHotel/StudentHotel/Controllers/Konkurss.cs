@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Web.Helpers;
 using DBdata.EF;
 using DBdata.EntityModels;
 using Microsoft.AspNetCore.Mvc;
@@ -74,7 +75,7 @@ namespace StudentHotel.Controllers
             snimiVM.GodinaStudija = GodinaStudija;
             snimiVM.Kanton = kanton;
             snimiVM.Pol = pol;
-
+           
             return View(snimiVM);
         }
         public IActionResult Snimi(SnimiVM admir)
@@ -108,4 +109,9 @@ namespace StudentHotel.Controllers
             return Redirect(url:"/");
         }
     }
+    //public JsonResult UcitajOpcine(int KantonID)
+    //{
+    //    List<Op>
+    //    return Json()
+    //}
 }

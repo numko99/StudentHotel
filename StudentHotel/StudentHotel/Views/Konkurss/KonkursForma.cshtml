@@ -91,13 +91,13 @@
             </div>
             <div class="form-group">
                 <label>Opstina</label>
-                <select asp-for="MjestoStanovanjaID" asp-items="@Model.MjestoStanovanja" class="form-control form-control-sm" ></select>
+                <select asp-for="MjestoStanovanjaID" asp-items="@Model.MjestoStanovanja" id="StanovanjeID" class="form-control form-control-sm" ></select>
             </div>
         </div>
         <div>
             <div class="form-group">
                 <label>Kanton</label>
-                <select asp-for="KantonID" asp-items="@Model.Kanton" class="form-control form-control-sm" id="DropdownID" onchange="admir()"></select>
+                <select asp-for="KantonID" asp-items="@Model.Kanton" class="form-control form-control-sm" id="DropdownID"></select>
             </div>
         </div>
 
@@ -133,13 +133,12 @@
     </fieldset>
     <input type="submit" class="btn btn-danger" value="Submit" />
 </form>
-
-@*<button onclick=admir()>ssss</button>
+@*<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
-    var admir=() => {
-
-        console.log(document.getElementById("DropdownID").value);
-        var kanton = document.getElementById("DropdownID").value;
-        var opstine=
-    }
+    $(document).ready(function () {
+        $("#DropdownID").change(function () {
+            $.get("/Konkurss/UcitajOpcine")
+        })
+    })
 </script>*@

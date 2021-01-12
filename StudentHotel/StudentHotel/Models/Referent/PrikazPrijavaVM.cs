@@ -17,8 +17,10 @@ namespace StudentHotel.Models.Referent
             public string OpstinaPrebivalista { get; set; }
             public string DatumRodjenja { get; set; }
             public int ?StudentID { get; set; }
+            public int ?Bodovi { get; set; }
         }
         public List<Row> Students { get; set; }
+        public string Pretraga { get; set; }
 
     }
 }

@@ -2,7 +2,7 @@
 
 namespace DBdata.Migrations
 {
-    public partial class StudentHotel4 : Migration
+    public partial class StudentHotel7 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -142,6 +142,32 @@ namespace DBdata.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "vrstaRazlogaOdbijanjas",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_vrstaRazlogaOdbijanjas", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "VrstaStanjaKonkursas",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Naziv = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_VrstaStanjaKonkursas", x => x.ID);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "VrstaStanjaZahtjevas",
                 columns: table => new
                 {
@@ -185,6 +211,33 @@ namespace DBdata.Migrations
                         principalTable: "Kantons",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "RezultatKonkursas",
+                columns: table => new
+                {
+                    ID = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    BrojBodova = table.Column<int>(type: "int", nullable: false),
+                    VrstaStanjaKonkursaID = table.Column<int>(type: "int", nullable: true),
+                    VrstaRazlogaOdbijanjaID = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_RezultatKonkursas", x => x.ID);
+                    table.ForeignKey(
+                        name: "FK_RezultatKonkursas_vrstaRazlogaOdbijanjas_VrstaRazlogaOdbijanjaID",
+                        column: x => x.VrstaRazlogaOdbijanjaID,
+                        principalTable: "vrstaRazlogaOdbijanjas",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_RezultatKonkursas_VrstaStanjaKonkursas_VrstaStanjaKonkursaID",
+                        column: x => x.VrstaStanjaKonkursaID,
+                        principalTable: "VrstaStanjaKonkursas",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -410,7 +463,8 @@ namespace DBdata.Migrations
                     BrojIndeksa = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CiklusStudijaID = table.Column<int>(type: "int", nullable: false),
                     GodinaStudijaID = table.Column<int>(type: "int", nullable: false),
-                    StudentID = table.Column<int>(type: "int", nullable: true)
+                    StudentID = table.Column<int>(type: "int", nullable: true),
+                    RezultatKonkursaID = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -438,7 +492,7 @@ namespace DBdata.Migrations
                         column: x => x.MjestoRodjenjaID,
                         principalTable: "Grads",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Konkurs_Grads_MjestoStanovanjaID",
                         column: x => x.MjestoStanovanjaID,
@@ -450,13 +504,19 @@ namespace DBdata.Migrations
                         column: x => x.KantonID,
                         principalTable: "Kantons",
                         principalColumn: "ID",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Konkurs_Pols_PolID",
                         column: x => x.PolID,
                         principalTable: "Pols",
                         principalColumn: "ID",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Konkurs_RezultatKonkursas_RezultatKonkursaID",
+                        column: x => x.RezultatKonkursaID,
+                        principalTable: "RezultatKonkursas",
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Konkurs_Students_StudentID",
                         column: x => x.StudentID,
@@ -674,6 +734,11 @@ namespace DBdata.Migrations
                 column: "PolID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Konkurs_RezultatKonkursaID",
+                table: "Konkurs",
+                column: "RezultatKonkursaID");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Konkurs_StudentID",
                 table: "Konkurs",
                 column: "StudentID");
@@ -712,6 +777,16 @@ namespace DBdata.Migrations
                 name: "IX_Osobljes_LokacijaID",
                 table: "Osobljes",
                 column: "LokacijaID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RezultatKonkursas_VrstaRazlogaOdbijanjaID",
+                table: "RezultatKonkursas",
+                column: "VrstaRazlogaOdbijanjaID");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_RezultatKonkursas_VrstaStanjaKonkursaID",
+                table: "RezultatKonkursas",
+                column: "VrstaStanjaKonkursaID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Students_CiklusStudijaID",
@@ -834,6 +909,9 @@ namespace DBdata.Migrations
                 name: "Zahtjevs");
 
             migrationBuilder.DropTable(
+                name: "RezultatKonkursas");
+
+            migrationBuilder.DropTable(
                 name: "NacinUplates");
 
             migrationBuilder.DropTable(
@@ -844,6 +922,12 @@ namespace DBdata.Migrations
 
             migrationBuilder.DropTable(
                 name: "VrstaZahtjevas");
+
+            migrationBuilder.DropTable(
+                name: "vrstaRazlogaOdbijanjas");
+
+            migrationBuilder.DropTable(
+                name: "VrstaStanjaKonkursas");
 
             migrationBuilder.DropTable(
                 name: "Karticas");

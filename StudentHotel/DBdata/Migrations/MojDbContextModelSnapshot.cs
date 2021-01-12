@@ -221,6 +221,9 @@ namespace DBdata.Migrations
                     b.Property<string>("Prezime")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("RezultatKonkursaID")
+                        .HasColumnType("int");
+
                     b.Property<int?>("StudentID")
                         .HasColumnType("int");
 
@@ -245,6 +248,8 @@ namespace DBdata.Migrations
                     b.HasIndex("MjestoStanovanjaID");
 
                     b.HasIndex("PolID");
+
+                    b.HasIndex("RezultatKonkursaID");
 
                     b.HasIndex("StudentID");
 
@@ -422,6 +427,31 @@ namespace DBdata.Migrations
                     b.HasKey("ID");
 
                     b.ToTable("Pols");
+                });
+
+            modelBuilder.Entity("DBdata.EntityModels.RezultatKonkursa", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int>("BrojBodova")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("VrstaRazlogaOdbijanjaID")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("VrstaStanjaKonkursaID")
+                        .HasColumnType("int");
+
+                    b.HasKey("ID");
+
+                    b.HasIndex("VrstaRazlogaOdbijanjaID");
+
+                    b.HasIndex("VrstaStanjaKonkursaID");
+
+                    b.ToTable("RezultatKonkursas");
                 });
 
             modelBuilder.Entity("DBdata.EntityModels.Soba", b =>
@@ -634,6 +664,36 @@ namespace DBdata.Migrations
                     b.ToTable("Upozorenjes");
                 });
 
+            modelBuilder.Entity("DBdata.EntityModels.VrstaRazlogaOdbijanja", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Naziv")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("vrstaRazlogaOdbijanjas");
+                });
+
+            modelBuilder.Entity("DBdata.EntityModels.VrstaStanjaKonkursa", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Naziv")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("ID");
+
+                    b.ToTable("VrstaStanjaKonkursas");
+                });
+
             modelBuilder.Entity("DBdata.EntityModels.VrstaStanjaZahtjeva", b =>
                 {
                     b.Property<int>("ID")
@@ -785,6 +845,10 @@ namespace DBdata.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("DBdata.EntityModels.RezultatKonkursa", "RezultatKonkursa")
+                        .WithMany()
+                        .HasForeignKey("RezultatKonkursaID");
+
                     b.HasOne("DBdata.EntityModels.Student", "Student")
                         .WithMany()
                         .HasForeignKey("StudentID");
@@ -808,6 +872,8 @@ namespace DBdata.Migrations
                     b.Navigation("MjestoStanovanja");
 
                     b.Navigation("Pol");
+
+                    b.Navigation("RezultatKonkursa");
 
                     b.Navigation("Student");
 
@@ -875,6 +941,21 @@ namespace DBdata.Migrations
                         .IsRequired();
 
                     b.Navigation("Lokacija");
+                });
+
+            modelBuilder.Entity("DBdata.EntityModels.RezultatKonkursa", b =>
+                {
+                    b.HasOne("DBdata.EntityModels.VrstaRazlogaOdbijanja", "VrstaRazlogaOdbijanja")
+                        .WithMany()
+                        .HasForeignKey("VrstaRazlogaOdbijanjaID");
+
+                    b.HasOne("DBdata.EntityModels.VrstaStanjaKonkursa", "VrstaStanjaKonkursa")
+                        .WithMany()
+                        .HasForeignKey("VrstaStanjaKonkursaID");
+
+                    b.Navigation("VrstaRazlogaOdbijanja");
+
+                    b.Navigation("VrstaStanjaKonkursa");
                 });
 
             modelBuilder.Entity("DBdata.EntityModels.Student", b =>

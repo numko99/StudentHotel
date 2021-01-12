@@ -1,34 +1,69 @@
 ﻿@using StudentHotel.Models.Referent
-@{ 
+@{
     @model PrikazPrijavaVM
 }
+<style>
+    .input-group {
+        width: auto;
+    }
+
+     .input-group input,
+     .input-group .form-notch,
+     .input-group .form-notch-trailing {
+            border-top-right-radius: 0 !important;
+            border-bottom-right-radius: 0 !important;
+       }
+        .input-group button {
+            border-top-left-radius: 0 !important;
+        }
+</style>
+
+    <form>
+
+        <input name="pretraga" value="@Model.Pretraga" placeholder="Trazi" />
+        <input type="submit" value="Trazi" class="btn btn-primary" />
+
+    </form>
+
 <table class="table">
     <tr>
         <th>Ime i Prezime</th>
         <th>Datum Rodjenja</th>
         <th>Mjesto Stanovanja</th>
+        <th>Bodovi</th>
         <th></th>
     </tr>
     @foreach (var item in Model.Students)
     {
-<tr>
-    <td>@item.Ime @item.Prezime</td>
-    <td>@item.DatumRodjenja</td>
-    <td>@item.OpstinaPrebivalista</td>
-    @{
-        if (item.StudentID > 0)
-        {
-            <td style="color:red">Student Primljen</td>
-            <td><button class="btn btn-light" onclick="window.location='/Referent/DetaljiPrikazPrijava?KonkursID='+@item.ID">Uredi</button></td>
+        <tr>
+            <td>@item.Ime @item.Prezime</td>
+            <td>@item.DatumRodjenja</td>
+            <td>@item.OpstinaPrebivalista</td>
+            @{
+                if (@item.Bodovi == 0)
+                {
+                    <td style="color:red">Nije pregledan</td>
+                }
+                else
+                {
+                    <td>@item.Bodovi</td>
 
-        }
-        else
-        {
-            <td><button class="btn btn-primary" onclick="window.location='/Referent/DetaljiPrikazPrijava?KonkursID='+@item.ID">Pregled</button></td>
+                }
+            }
+            @{
+                if (item.StudentID > 0)
+                {
+                    <td style="color:red">Student Primljen</td>
+                    <td><button class="btn btn-light" onclick="window.location='/Referent/DetaljiPrikazPrijava?KonkursID='+@item.ID">Uredi</button></td>
 
-        }
-    }
-</tr>
+                }
+                else
+                {
+                    <td><button class="btn btn-primary" onclick="window.location='/Referent/DetaljiPrikazPrijava?KonkursID='+@item.ID">Pregled</button></td>
+
+                }
+            }
+        </tr>
     }
 
 </table>
