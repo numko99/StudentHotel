@@ -91,13 +91,15 @@
             </div>
             <div class="form-group">
                 <label>Opstina</label>
-                <select asp-for="MjestoStanovanjaID" asp-items="@Model.MjestoStanovanja" id="StanovanjeID" class="form-control form-control-sm" ></select>
+                <select asp-for="MjestoStanovanjaID" asp-items="@Model.MjestoStanovanja" id="StanovanjeID" class="form-control form-control-sm">
+                  
+                </select>
             </div>
         </div>
         <div>
             <div class="form-group">
                 <label>Kanton</label>
-                <select asp-for="KantonID" asp-items="@Model.Kanton" class="form-control form-control-sm" id="DropdownID"></select>
+                <select asp-for="KantonID" asp-items="@Model.Kanton" class="form-control form-control-sm" id="KantonID"></select>
             </div>
         </div>
 
@@ -133,12 +135,19 @@
     </fieldset>
     <input type="submit" class="btn btn-danger" value="Submit" />
 </form>
-@*<script src="~/lib/jquery/dist/jquery.min.js"></script>
 <script src="~/lib/jquery/dist/jquery.js"></script>
 <script>
     $(document).ready(function () {
-        $("#DropdownID").change(function () {
-            $.get("/Konkurss/UcitajOpcine")
+        $("#KantonID").change(function () {
+            $.get("/Konkurss/PrikazOpstina", { KantonID: $("#KantonID").val() }, function (data) {
+                $("#StanovanjeID").empty();
+                $.each(data, function (i, item) {
+                    $("#StanovanjeID").append("<option value='" + item.value + "'>" + item.text + "</option>");
+                   
+                  
+                });
+
+            }); 
         })
-    })
-</script>*@
+    });
+</script>

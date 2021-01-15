@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Web.Helpers;
 using DBdata.EF;
 using DBdata.EntityModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using StudentHotel.Models.Konkurss;
+
 
 namespace StudentHotel.Controllers
 {
@@ -17,7 +17,7 @@ namespace StudentHotel.Controllers
         {
             return View();
         }
-    
+
         public IActionResult KonkursForma()
         {
             MojDbContext dbContext = new MojDbContext();
@@ -67,7 +67,7 @@ namespace StudentHotel.Controllers
             }).ToList();
 
             SnimiVM snimiVM = new SnimiVM();
-            snimiVM.MjestoStanovanja = opstine;
+            //snimiVM.MjestoStanovanja = opstine;
             snimiVM.MjestoRodjenja = opstine;
             snimiVM.CiklusStudija = CiklusStudija;
             snimiVM.TipKandidata = TipKandidata;
@@ -75,7 +75,7 @@ namespace StudentHotel.Controllers
             snimiVM.GodinaStudija = GodinaStudija;
             snimiVM.Kanton = kanton;
             snimiVM.Pol = pol;
-           
+
             return View(snimiVM);
         }
         public IActionResult Snimi(SnimiVM admir)
@@ -106,12 +106,17 @@ namespace StudentHotel.Controllers
             konkurs.GodinaStudijaID = admir.GodinaStudijaID;
             dbContext.Add(konkurs);
             dbContext.SaveChanges();
-            return Redirect(url:"/");
+            return Redirect(url: "/");
+        }
+        public JsonResult PrikazOpstina(int KantonID)
+        {
+            MojDbContext dbContext = new MojDbContext();
+            List<SelectListItem> opstine = dbContext.Grads.Where(a => a.KantonID == KantonID).Select(a => new SelectListItem
+            {
+                Text = a.Naziv,
+                Value = a.ID.ToString()
+            }).ToList();
+            return Json(opstine);
         }
     }
-    //public JsonResult UcitajOpcine(int KantonID)
-    //{
-    //    List<Op>
-    //    return Json()
-    //}
 }
