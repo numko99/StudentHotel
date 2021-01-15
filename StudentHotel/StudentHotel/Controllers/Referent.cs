@@ -134,11 +134,11 @@ namespace StudentHotel.Controllers
 
             }
             var st = dbContext.Students.Find(konkurs.StudentID);
-
             if (konkurs.StudentID>0 && rezultat.VrstaStanjaKonkursaID !=2 && st.Uselio==false)
             {
-                dbContext.Remove(st.Lokacija);
+            var lok = dbContext.Lokacijas.Find(st.LokacijaID);
                 dbContext.Remove(konkurs.Student);
+                dbContext.Remove(lok);
                 dbContext.SaveChanges();
             }
             if (rezultat.ID == 0)
