@@ -13,7 +13,7 @@ namespace StudentHotel
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();   
+            CreateHostBuilder(args).Build().Run();   //debiluuuuu
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
